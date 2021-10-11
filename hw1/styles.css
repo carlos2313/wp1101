@@ -3,17 +3,23 @@
     font-family: "Gayathri", sans-serif;
     background-color: azure;
 }
-.mainphotobackgorund{
+/* .mainphotobackgorund{
     background-color: gray;
     background-size: 60vmax auto;
     background-position:right top;
-}
+} */
 .mainphoto{
     position:absolute;
     bottom:20%;
     right:10%;
     width:47.5vmax;
     border: 2px solid black;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    transition: all 2s ease;
+}
+.mainphoto:hover{
+    box-shadow: 0 0 6px 3px #fff, /* inner white */ 0 0 10px 6px #f0f,
+        /* middle magenta */ 0 0 14px 9px #0ff; /* outer cyan */
 }
 .previewphoto1{
     position: absolute;
