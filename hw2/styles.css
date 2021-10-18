@@ -1,0 +1,79 @@
+*{
+    box-sizing: border-box;
+    font-family: "Gayathri", sans-serif;
+    background-color: azure;
+}
+/* .mainphotobackgorund{
+    background-color: gray;
+    background-size: 60vmax auto;
+    background-position:right top;
+} */
+#mainphoto{
+    position:absolute;
+    bottom:20%;
+    right:10%;
+    width:47.5vmax;
+    border: 2px solid black;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    transition: all 2s ease;
+}
+#mainphoto:hover{
+    box-shadow: 0 0 6px 3px #fff, /* inner white */ 0 0 10px 6px #f0f,
+        /* middle magenta */ 0 0 14px 9px #0ff; /* outer cyan */
+}
+#previewphoto1{
+    position: absolute;
+    bottom:5%;
+    right: 10%;
+    width: 7vmax;
+}
+#previewphoto1:hover{
+    transform:scale(1.2,1.2);
+}
+#previewphoto2{
+    position: absolute;
+    bottom:5%;
+    right: 20%;
+    width: 8vmax;
+}
+#previewphoto2:hover{
+    transform:scale(1.2,1.2);
+}
+#previewphoto3{
+    position: absolute;
+    bottom:5%;
+    right: 31%;
+    width: 7vmax;
+}
+#previewphoto3:hover{
+    transform:scale(1.2,1.2);
+}
+#previewphoto4{
+    position: absolute;
+    bottom:5%;
+    right: 41%;
+    width: 7vmax;
+}
+#previewphoto4:hover{
+    transform:scale(1.2,1.2);
+}
+#previewphoto5{
+    position: absolute;
+    bottom:5%;
+    right: 51%;
+    width: 7vmax;
+}
+#previewphoto5:hover{
+    transform:scale(1.2,1.2);
+}
+.albums{
+    position: relative;
+    left: 5%; 
+}
+.choices{
+    position: relative;
+    left: 8%;
+}
+.choices:hover{
+    color:rgb(201, 197, 152);
+}
