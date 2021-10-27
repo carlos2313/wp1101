@@ -1,96 +1,170 @@
 var todoListLength = 0;
+var todoListSeq = 0;
+var done = 0;
 let input = document.getElementById("todo_input");
 let todolist = document.getElementById("todo-list");
+let footer = document.getElementById("todo-footer");
+let allevents = [];
+let allbutton = footer.children[1].children[0];
+let activebutton = footer.children[1].children[1];
+let completedbutton = footer.children[1].children[2];
+let clearbutton = footer.lastElementChild.firstElementChild;
 
-function creaate_footer(){
-    let footer = document.createElement("footer");
-    footer.className = "todo-app__footer";
-    footer.id = "todo-footer";
-    let total = document.createElement("div");
-    total.className = "todo-app__total";
-    total.id = "todo_num";
-    total.textContent = "1 left";
-    let buttons = document.createElement("ul");
-    buttons.className = "todo-app__view-buttons";
-    let All = document.createElement("button");
-    All.textContent = "All";
-    let Active = document.createElement("button");
-    Active.textContent = "Active";
-    let Completed = document.createElement("button");
-    Completed.textContent = "Completed";
-    let clean = document.createElement("div");
-    clean.className = "todo-app__clean";
-    let Clear_completed = document.createElement("button");
-    Clear_completed.textContent = "Clear completed";
-    buttons.appendChild(All);
-    buttons.appendChild(Active);
-    buttons.appendChild(Completed);
-    clean.appendChild(Clear_completed);
-    footer.appendChild(total);
-    footer.appendChild(buttons);
-    footer.appendChild(clean);
-    root = document.getElementById("root");
-    root.appendChild(footer);
+function clearbuttonvisibility(){
+    if(done>0){
+        clearbutton.style = "visibility: visible;";
+    }else{
+        clearbutton.style = "visibility: hidden;";
+    }
+}
+function footervisible(){
+    footer.style = "visibility: visible;";
+    countAdjust();
+    clearbuttonvisibility();
+}
+function footerhidden(){
+    footer.style = "visibility: hidden;";
+}
+
+function countAdjust(){
+    footer.firstElementChild.textContent = `${todoListLength} left`;
+}
+
+function check(){
+    if(this.checked === 0){
+        let detail = document.getElementById(this.for).parentElement.nextElementSibling;
+        detail.style="text-decoration: line-through; opacity: 0.5;";
+        this.style = "background: #26ca299b";
+        this.checked = 1;
+        todoListLength--;
+        done++;
+    }else{
+        let detail = document.getElementById(this.for).parentElement.nextElementSibling;
+        detail.style="text-decoration:";
+        this.style = "background: rgba(99, 99, 99, 0.698);";
+        this.checked = 0;
+        todoListLength++;
+        done--;
+    }
+    countAdjust();
+    clearbuttonvisibility();
+}
+
+function event_remove(){
+    let event = document.getElementById(this.id).parentElement;
+    if(event.firstElementChild.lastElementChild.checked===1){
+        done--;
+    }else{
+        todoListLength--;
+    }
+    let index = allevents.indexOf(event);
+    if(index > -1){
+        allevents.splice(index, 1);
+    }
+    event.remove();
+    countAdjust();
+    clearbuttonvisibility();
+    if(todoListLength===0 && done===0){
+        footerhidden();
+    }
+    console.log("done = " + done + "len = " + todoListLength);
 }
 
 class Event{
     constructor(event){
         this.node = document.createElement("li");
         this.node.className = "todo-app__item";
-        this.node.id = todoListLength-1;
-        let checkbox = document.createElement("div");
-        checkbox.className = "todo-app__checkbox";
-        let hiddeninput = document.createElement("input");
-        hiddeninput.id = todoListLength.toString();
-        hiddeninput.type = "checkbox";
-        let label = document.createElement("label");
-        label.for = todoListLength.toString();
-        label.checked = 0;
-        label.addEventListener('click', function(e){
-            console.log(this.checked);
-            if(this.checked == 0){
-                let detail = document.getElementById(this.for).parentElement.nextElementSibling;
-                detail.style="text-decoration: line-through; opacity: 0.5;";
-                this.style = "background: #26ca299b";
-                this.checked = 1;
-            }else{
-                let detail = document.getElementById(this.for).parentElement.nextElementSibling;
-                detail.style="text-decoration:";
-                this.style = "background: rgba(99, 99, 99, 0.698);";
-                this.checked = 0;
-            }
-        });
-        let detail = document.createElement("h1");
-        detail.className = "todo-app__item-detail";
-        detail.textContent = event;
-        let img = document.createElement("img");
-        img.src = "./img/x.png";
-        img.className = "todo-app__item-x";
-        checkbox.appendChild(hiddeninput);
-        checkbox.appendChild(label);
-        this.node.appendChild(checkbox);
-        this.node.appendChild(detail);
-        this.node.appendChild(img);
+        this.node.id = todoListSeq;
+        this.checkbox = document.createElement("div");
+        this.checkbox.className = "todo-app__checkbox";
+        this.hiddeninput = document.createElement("input");
+        this.hiddeninput.id = "checkbox" + todoListSeq;
+        this.hiddeninput.type = "checkbox";
+        this.label = document.createElement("label");
+        this.label.for = "checkbox" + todoListSeq;
+        this.label.checked = 0;
+        this.label.addEventListener('click', check);
+        this.detail = document.createElement("h1");
+        this.detail.className = "todo-app__item-detail";
+        this.detail.textContent = event;
+        this.img = document.createElement("img");
+        this.img.src = "./img/x.png";
+        this.img.className = "todo-app__item-x";
+        this.img.id = "img" + todoListSeq.toString();
+        this.img.addEventListener('click', event_remove);
+        this.checkbox.appendChild(this.hiddeninput);
+        this.checkbox.appendChild(this.label);
+        this.node.appendChild(this.checkbox);
+        this.node.appendChild(this.detail);
+        this.node.appendChild(this.img);
     }
     get Node(){
         return this.node;
     };
 }
 
+allbutton.addEventListener('click', function(){
+    while(todolist.firstChild) {
+        todolist.removeChild(todolist.firstChild);
+    }
+    for(let i=0;i<allevents.length;i++){
+        todolist.appendChild(allevents[i]);
+    }
+});
+activebutton.addEventListener('click', function(){
+    activeevents = allevents.filter(event => event.firstElementChild.lastElementChild.checked===0);
+    while(todolist.firstChild) {
+        todolist.removeChild(todolist.firstChild);
+    }
+    for(let i=0;i<activeevents.length;i++){
+        todolist.appendChild(activeevents[i]);
+    }
+});
+completedbutton.addEventListener('click', function(){
+    completedevents = allevents.filter(event => event.firstElementChild.lastElementChild.checked===1);
+    while(todolist.firstChild) {
+        todolist.removeChild(todolist.firstChild);
+    }
+    for(let i=0;i<completedevents.length;i++){
+        todolist.appendChild(completedevents[i]);
+    }
+});
+
+clearbutton.addEventListener('click', function(){
+    let n = todolist.children.length;
+    let removecnt = 0;
+    for(let i=0;i<n;i++){
+        if(todolist.children[i-removecnt].firstElementChild.lastElementChild.checked===1){
+            let index = allevents.indexOf(todolist.children[i-removecnt]);
+            if(index > -1){
+                allevents.splice(index, 1);
+            }
+            todolist.children[i-removecnt].remove();
+            removecnt++;
+            done--;
+        }
+    }
+    clearbuttonvisibility();
+    if(done===0 && todoListLength===0){
+        footerhidden();
+    }
+});
+
 input.addEventListener('keydown', function(e){
     if( e.code === "Enter" ){
         if(input.value!=''){
             todoListLength++;
+            todoListSeq++;
             console.log(todoListLength);
-            if(todoListLength == 1){//from 0 to 1
-                creaate_footer();
+            if(todoListLength === 1){
+                footervisible();
+            }else{
+                countAdjust();
             }
             let rNode = new Event(input.value).Node;
             todolist.appendChild(rNode);
-
+            allevents.push(rNode);
             input.value = "";
-            let todoNum = document.getElementById("todo_num");
-            todoNum.textContent = `${todoListLength} left`;
         }else{
             console.log("input is empty!!")
         }
