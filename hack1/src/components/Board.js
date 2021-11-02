@@ -33,8 +33,17 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         {/* -- TODO 3-1 -- */}
         {/* Useful Hint: createBoard(...) */}
         let temp = createBoard(boardSize, mineNum);
-        setBoard(temp.board);
+        let tempboard = [];
+        for(let y = 0; y < boardSize; y++){
+            let subRow = [];
+            for(let x = 0; x < boardSize; x++){
+                subRow.push(temp.board[x][y]);
+            }
+            tempboard.push(subRow);
+        }
+        setBoard(tempboard);
         setMineLocations(temp.mineLocations);
+        setRemainFlagNum(mineNum);
     }
 
     const restartGame = () => {
@@ -52,13 +61,13 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         {/* Useful Hint: A cell is going to be flagged. 'x' and 'y' are the xy-coordinate of the cell. */}
         {/* Reminder: If the cell is already flagged, you should unflagged it. Also remember to update the board and the remainFlagNum. */}
         {/* Reminder: The cell can be flagged only when it is not revealed. */}
-        if(board[x][y].revealed===false){
+        if(board[y][x].revealed===false){
             let tempboard = [...board];
-            if(tempboard[x][y].flagged===false){
-                tempboard[x][y].flagged = true;
+            if(tempboard[y][x].flagged===false){
+                tempboard[y][x].flagged = true;
                 setRemainFlagNum(remainFlagNum-1);
             }else{
-                tempboard[x][y].flagged = false;
+                tempboard[y][x].flagged = false;
                 setRemainFlagNum(remainFlagNum+1);
             }
             setBoard(tempboard);
@@ -84,7 +93,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
             {/* Reminder: Remember to use the component <Cell> and <Dashboard>. See Cell.js and Dashboard.js for detailed information. */}
             <div className = "boardContainer">
                 <Dashboard remainFlagNum={remainFlagNum} gameOver={gameOver}/>
-                {board.map((e, y) => <div id={"row{y}"} style = {{display: "flex"}}>{e.map((ee, x)=> <Cell id={"{x}-{y}"} rowIdx={y} colIdx={x} detail={ee} updateFlag={updateFlag} revealCell={revealCell}/>)}</div>)}
+                {board.map((e, y) => <div id={"row{y}"} style = {{display: "flex"}}>{e.map((ee, x)=> <Cell id={"{y}-{x}"} rowIdx={y} colIdx={x} detail={ee} updateFlag={updateFlag} revealCell={revealCell}/>)}</div>)}
                 {/* <Cell id={"0-0"} rowIdx={0} colIdx={0} detail={board[0][0]} updateFlag={updateFlag} revealCell={revealCell}/>) */}
             </div>
             </div>
