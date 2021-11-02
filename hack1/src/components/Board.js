@@ -80,7 +80,9 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         {/* Reveal the cell */}
         {/* Useful Hint: The function in reveal.js may be useful. You should consider if the cell you want to reveal is a location of mines or not. */}
         {/* Reminder: Also remember to handle the condition that after you reveal this cell then you win the game. */}
-        
+        if(board[y][x].revealed===false){
+
+        }
     };
 
     return(
@@ -93,7 +95,7 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
             {/* Reminder: Remember to use the component <Cell> and <Dashboard>. See Cell.js and Dashboard.js for detailed information. */}
             <div className = "boardContainer">
                 <Dashboard remainFlagNum={remainFlagNum} gameOver={gameOver}/>
-                {board.map((e, y) => <div id={"row{y}"} style = {{display: "flex"}}>{e.map((ee, x)=> <Cell id={"{y}-{x}"} rowIdx={y} colIdx={x} detail={ee} updateFlag={updateFlag} revealCell={revealCell}/>)}</div>)}
+                {board.map((e, y) => <div id={"row".concat(y)} style = {{display: "flex"}}>{e.map((ee, x)=> <Cell id={"{y}-{x}"} rowIdx={y} colIdx={x} detail={ee} updateFlag={updateFlag} revealCell={revealCell}/>)}</div>)}
                 {/* <Cell id={"0-0"} rowIdx={0} colIdx={0} detail={board[0][0]} updateFlag={updateFlag} revealCell={revealCell}/>) */}
             </div>
             </div>
