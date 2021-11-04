@@ -27,8 +27,8 @@ export default function Modal({restartGame, backToHome, win}){
                     {win===true? "WIN": "Game Over"}
                 </div>
                 <div className = "modalBtnWrapper">
-                    <div className = "modalBtn">{win===true? "New Game": "Try Again"}</div>
-                    <div className = "modalBtn">Back to Home</div>
+                    <div className = "modalBtn" onClick={win===true? backToHome: restartGame}>{win===true? "New Game": "Try Again"}</div>
+                    <div className = "modalBtn" onClick={backToHome}>Back to Home</div>
                 </div>
             </div>
             <div className = "modalWrapper"></div>

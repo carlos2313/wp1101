@@ -13,6 +13,7 @@ import Dashboard from './Dashboard';
 import createBoard from '../util/createBoard';
 import { revealed } from '../util/reveal';
 import './css/Board.css'
+import testUtils from 'react-dom/test-utils';
 
 
 const Board = ({ boardSize, mineNum, backToHome }) => {
@@ -44,12 +45,13 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         setBoard(tempboard);
         setMineLocations(temp.mineLocations);
         setRemainFlagNum(mineNum);
+        setNonMineCount(boardSize * boardSize - mineNum);
     }
 
     const restartGame = () => {
         {/* -- TODO 5-2 -- */}
         {/* Useful Hint: freshBoard() */}
-        
+        freshBoard();
     }
 
     // On Right Click / Flag Cell
@@ -80,8 +82,21 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
         {/* Reveal the cell */}
         {/* Useful Hint: The function in reveal.js may be useful. You should consider if the cell you want to reveal is a location of mines or not. */}
         {/* Reminder: Also remember to handle the condition that after you reveal this cell then you win the game. */}
-        if(board[y][x].revealed===false){
-
+        if(board[y][x].revealed===false && board[y][x].flagged===false && win===false && gameOver===false){
+            let temp = revealed(board, x, y, nonMineCount);
+            setBoard(temp.board);
+            setNonMineCount(temp.newNonMinesCount);
+            if(board[y][x].value==='💣'){
+                for(let i=0;i<mineLocations.length;i++){
+                    revealCell(mineLocations[i][0], mineLocations[i][1]);
+                }
+                setGameOver(true);
+                restartGame();
+            }else if(temp.newNonMinesCount===0){
+                setWin(true);
+                restartGame();
+            }
+            console.log(nonMineCount);
         }
     };
 
@@ -96,9 +111,10 @@ const Board = ({ boardSize, mineNum, backToHome }) => {
             <div className = "boardContainer">
                 <Dashboard remainFlagNum={remainFlagNum} gameOver={gameOver}/>
                 {board.map((e, y) => <div id={"row".concat(y)} style = {{display: "flex"}}>{e.map((ee, x)=> <Cell id={"{y}-{x}"} rowIdx={y} colIdx={x} detail={ee} updateFlag={updateFlag} revealCell={revealCell}/>)}</div>)}
-                {/* <Cell id={"0-0"} rowIdx={0} colIdx={0} detail={board[0][0]} updateFlag={updateFlag} revealCell={revealCell}/>) */}
             </div>
             </div>
+            {(win || gameOver)===true? <Modal restartGame={restartGame} backToHome={backToHome} win={win}/>: <></>}
+            
         </div>
     ); 
 

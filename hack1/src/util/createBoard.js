@@ -50,11 +50,11 @@ export default (boardSize, mineNum) => {
         }
     }
 
-    {/* -- TODO 2 -- */}
-    {/* Useful Hints: Calculate and update the value of each cell in the board. The value means the number of mines adjacent to the cell. */}
-    {/* Reminder: Some cells in the board do not have "Top" position, some do not have "Top-Right" position .... */}
-    {/* Warning: The value of any cell will not be bigger than 8 logically. */}
-    {/* Testing: printBoard() */}
+    // {/* -- TODO 2 -- */}
+    // {/* Useful Hints: Calculate and update the value of each cell in the board. The value means the number of mines adjacent to the cell. */}
+    // {/* Reminder: Some cells in the board do not have "Top" position, some do not have "Top-Right" position .... */}
+    // {/* Warning: The value of any cell will not be bigger than 8 logically. */}
+    // {/* Testing: printBoard() */}
     for(let x = 0; x < boardSize; x++){
         for(let y = 0; y < boardSize; y++){
             let cnt = 0;
