@@ -7,7 +7,7 @@ router.use(bodyParser.json());
 router.get('/query-cards', async (req, res) => {
     var ScoreCards;
     var messages = [];
-    var errorMessage = '';
+    var responseMessage = `Querying ${req.query.type} (${req.query.queryString})`;
     try{
         if(req.query.type === 'Name'){
             ScoreCards = await ScoreCard.find({Name: req.query.queryString});
@@ -17,13 +17,13 @@ router.get('/query-cards', async (req, res) => {
             messages = ScoreCards.map(card => `Found card with ${req.query.type}: (${card.Name}, ${card.Subject}, ${card.Score})`);
         }
         if(ScoreCards.length === 0){
-            messages = '';
-            errorMessage = `${req.query.type} (${req.query.queryString}) not found!`;
+            ScoreCards = '';
+            responseMessage = `${req.query.type} (${req.query.queryString}) not found!`;
         }
     }catch(e){
         throw new Error("Database query failed"); 
     }
-    res.json({ messages: messages, message: errorMessage});
+    res.json({ queryData: ScoreCards, message: responseMessage});
 });
 
 export default router;

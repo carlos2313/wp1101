@@ -8,6 +8,7 @@ router.post('/create-card', async (req, res) => {
     const existing = await ScoreCard.findOne({Name: req.body.name, Subject: req.body.subject});
     var responseMessage = '';
     var newScoreCard;
+    var ScoreCardsWithName;
     try{
         if (existing) {
             newScoreCard = await ScoreCard.updateOne(
@@ -21,10 +22,11 @@ router.post('/create-card', async (req, res) => {
             newScoreCard = await ScoreCard.create({Name: req.body.name, Subject: req.body.subject, Score: req.body.score});
             responseMessage = `Adding (${req.body.name}, ${req.body.subject}, ${req.body.score})`;
         }
+        ScoreCardsWithName = await ScoreCard.find({Name: req.body.name});
     }catch(e){
         throw new Error("add card failed"); 
     }
-    res.json({ message: responseMessage, card: newScoreCard});//what inside the newScoreCard doesn't matter, it just have to return something to match frontend.
+    res.json({ message: responseMessage, card: newScoreCard, personalData: ScoreCardsWithName});//what inside the newScoreCard doesn't matter, it just have to return something to match frontend.
 });
 
 

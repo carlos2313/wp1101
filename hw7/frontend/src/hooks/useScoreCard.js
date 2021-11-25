@@ -7,32 +7,33 @@ const ERROR_MESSAGE_COLOR = '#fb3640';
 const ScoreCardContext = createContext({
     messages: [],
 
-    addCardMessage: () => {},
-    addRegularMessage: () => {},
+    addCardMessageAndPersonalData: () => {},
+    addQueryMessageAndData: () => {},
     addErrorMessage: () => {},
     clearMessages: () => {},
 });
 
-const makeMessage = (message, color) => {
-    return { message, color };
+const makeMessage = (message, color, isQuery) => {
+    return { message, color, isQuery};
 };
+
+const makeTableData = (data, isQuery) => {
+    return {data, isData: true, isQuery: isQuery};
+}
 
 const ScoreCardProvider = (props) => {
     const [messages, setMessages] = useState([]);
 
-    const addCardMessage = (message) => {
-        setMessages([...messages, makeMessage(message, ADD_MESSAGE_COLOR)]);
+    const addCardMessageAndPersonalData = (message, data) => {
+        setMessages([...messages, makeMessage(message, ADD_MESSAGE_COLOR, false), makeTableData(data, false)]);
     };
 
-    const addRegularMessage = (...ms) => {
-        setMessages([
-        ...messages,
-        ...ms.map((m) => makeMessage(m, REGULAR_MESSAGE_COLOR)),
-        ]);
+    const addQueryMessageAndData = (message, data) => {
+        setMessages([...messages, makeMessage(message, REGULAR_MESSAGE_COLOR, true), makeTableData(data, true)]);
     };
 
-    const addErrorMessage = (message) => {
-        setMessages([...messages, makeMessage(message, ERROR_MESSAGE_COLOR)]);
+    const addErrorMessage = (message, isQuery) => {
+        setMessages([...messages, makeMessage(message, ERROR_MESSAGE_COLOR, isQuery)]);
     };
 
     const clearMessages = (message) => {
@@ -44,8 +45,8 @@ const ScoreCardProvider = (props) => {
         <ScoreCardContext.Provider
         value={{
             messages,
-            addCardMessage,
-            addRegularMessage,
+            addCardMessageAndPersonalData,
+            addQueryMessageAndData,
             addErrorMessage,
             clearMessages,
         }}
