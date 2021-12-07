@@ -57,7 +57,7 @@ router.post('/newPost', async (req, res) => {
         console.log(aPost);
     }catch(e){
         responseMessage = "error";
-        res.status(403).json({message: responseMessage});
+        res.status(403).json({message: responseMessage, post: null});
         throw new Error("Database get allpost failed"); 
     }
     res.json({message: responseMessage});
