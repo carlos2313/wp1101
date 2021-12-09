@@ -44,7 +44,7 @@ const ChatRoom = (props) => {
                 if (!msg) {
                     displayStatus({
                         type: 'error',
-                        msg: 'Please enter a username and a message body.'
+                        msg: 'Please enter a message body.'
                     });
                     return;
                 }

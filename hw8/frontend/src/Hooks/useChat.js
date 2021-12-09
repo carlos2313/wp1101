@@ -6,8 +6,6 @@ const useChat = () => {
     const [messages, setMessages] = useState([]);
     const [status, setStatus] = useState({});
 
-    
-
     const sendMessage = (payload) => {
         sendData(["input", payload]);
     };

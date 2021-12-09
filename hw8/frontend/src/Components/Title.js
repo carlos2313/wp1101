@@ -10,6 +10,7 @@ const Title = styled.div`
         margin-right: 20px;
         font-size: 3em;
     }
+    padding: 20px;
 `
 
 export default Title;
