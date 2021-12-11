@@ -3,7 +3,7 @@ import { UserOutlined, LockOutlined} from "@ant-design/icons";
 import crypto from "crypto-js";
 const secretKey = 'password';
 
-const SignIn = ({setSignedIn, sendLogin, username, setUsername, hashedPassword, setHashedPassword }) => {
+const SignIn = ({sendLogin, username, setUsername, hashedPassword, setHashedPassword }) => {
     const formItemLayout = {
         labelCol: {
           xs: { span: 24},

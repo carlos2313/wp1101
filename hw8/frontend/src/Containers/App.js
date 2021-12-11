@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { message } from 'antd';
 import styled from 'styled-components';
 import useChat from '../Hooks/useChat';
-import useVerification from '../Hooks/useVerification';
 import ChatRoom from './ChatRoom';
 import Tabs from './Tab';
 
@@ -18,21 +17,21 @@ const Wrapper = styled.div`
 `;
 
 const LOCALSTORAGE_KEY = "save-username";
+const signIn_Key = "signIn";
 
 function App() {
     const savedUsername = localStorage.getItem(LOCALSTORAGE_KEY);
-    const { status, messages, sendMessage, clearMessages } = useChat();
-    const { verificationStatus, sendLogin, sendSignUp} = useVerification();
+    const isSignIn = JSON.parse(localStorage.getItem(signIn_Key));//localStorage is string fku
+    const { status, sendLogin, sendSignUp, createChatBox, sendMessage, logOut, isModalVisible, anotherUser, setAnotherUser, handleCancel, activeKey, panes, onChange, onEdit} = useChat();
     const [username, setUsername] = useState(savedUsername || "");
     const [hashedPassword, setHashedPassword] = useState("");
     const [body, setBody] = useState('')  // textBody
-    const [signedIn, setSignedIn] = useState(false);
-    const bodyRef = useRef(null);
+    const [signedIn, setSignedIn] = useState(isSignIn || false);
 
     const displayStatus = (payload) => {
         if (payload.msg) {
             const { type, msg } = payload;
-            const content = { content: msg, duration: 0.5 };
+            const content = { content: msg, duration: 1 };
             switch (type) {
                 case 'success':
                     if(msg === 'Login success'){
@@ -48,25 +47,25 @@ function App() {
         }
     };
     useEffect(() => { displayStatus(status)}, [status]);
-    useEffect(() => { displayStatus(verificationStatus)}, [verificationStatus]);
     useEffect(() => {
         if (signedIn) {
-            console.log('remember')
             localStorage.setItem(LOCALSTORAGE_KEY, username);
-        }}, [signedIn, username]
+            localStorage.setItem(signIn_Key, true);
+        }else{
+            localStorage.setItem(signIn_Key, false);
+        }
+    }, [signedIn, username]
     );
+    
     
     
     return (
         <Wrapper>
             {!signedIn? 
-            // <SignUp username = {username} setUsername = {setUsername} setPassword = {setPassword} displayStatus = {displayStatus}/>:
-            <Tabs setSignedIn={setSignedIn} sendLogin={sendLogin} sendSignUp={sendSignUp} username = {username} setUsername = {setUsername} hashedPassword = {hashedPassword} setHashedPassword = {setHashedPassword}/>
-            // :
-            // <SignIn username = {username} setUsername = {setUsername} setSignedIn = {setSignedIn} setSignedUp = {setSignedUp} displayStatus = {displayStatus}/>
-            // )
-            :
-            <ChatRoom messages = {messages} sendMessage = {sendMessage} clearMessages = {clearMessages} username = {username} body = {body} setBody = {setBody} bodyRef = {bodyRef} displayStatus = {displayStatus}/>}
+            <Tabs setSignedIn = {setSignedIn} sendLogin = {sendLogin} sendSignUp = {sendSignUp} username = {username} setUsername = {setUsername} hashedPassword = {hashedPassword} setHashedPassword = {setHashedPassword}/>:
+            <ChatRoom setSignedIn = {setSignedIn} createChatBox = {createChatBox} sendMessage = {sendMessage} logOut = {logOut} username = {username} body = {body} setBody = {setBody} displayStatus = {displayStatus}
+            isModalVisible = {isModalVisible} anotherUser = {anotherUser} setAnotherUser = {setAnotherUser} handleCancel = {handleCancel} activeKey = {activeKey} panes = {panes} onChange = {onChange} onEdit = {onEdit}
+            />}
         </Wrapper>
     )
 }

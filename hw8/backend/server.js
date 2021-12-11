@@ -3,8 +3,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from "dotenv-defaults";
 import http from "http";
-import Message from './models/Message';
-import User from './models/User';
+import {Message} from './models/Message';
+import {User} from './models/User';
+import ChatBox from './models/ChatBox';
 import {sendData, sendStatus, initData} from './wssConnect';
 import bcrypt from "bcrypt";
 import crypto from "crypto-js";
@@ -20,16 +21,10 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-const broadcastMessage = (data, status) => {
-    wss.clients.forEach((client) => {
-        sendData(data, client);
-        sendStatus(status, client);
-    });
-};
+var loginClients = [];
 
-db.once('open', () => {
+db.once('open', () => {    
     wss.on('connection', (ws) => {
-        initData(ws);
         ws.onmessage = async (byteString) => {
             const { data } = byteString;
             const [task, payload] = JSON.parse(data);
@@ -45,7 +40,9 @@ db.once('open', () => {
                         const originalPassword = crypto.AES.decrypt(password, secretKey).toString(crypto.enc.Utf8);
                         // console.log(originalPassword);
                         const passwordIsCorrect =  await bcrypt.compare(originalPassword, user.password);
-                        if(passwordIsCorrect){
+                        if(passwordIsCorrect){//give identity //may have some bugs(doesn't delete when unconnection) 
+                            loginClients.push({username: username, client: ws});
+                            // console.log('clients', loginClients);
                             sendData(["verificationStatus", { type: 'success', msg: 'Login success'}], ws);
                             console.log('login success');
                         }else{
@@ -70,29 +67,60 @@ db.once('open', () => {
                     }
                     break;
                 }
-                case 'input': {
-                    const { name, body } = payload;
-                    const message = new Message({ name, body });
-                    console.log(payload);
-                    try { 
-                        await message.save();
-                    } catch (e) { throw new Error
-                        ("Message DB save error: " + e);
+                case 'create': {
+                    const {users} = payload;
+                    var [user1, user2] = users;
+                    const user2existing = await User.findOne({username: user2});
+                    if(!user2existing){
+                        sendData(["createFailed", { type: 'error', msg: "Username doesn't exist."}], ws);
+                        console.log("user doesn't exist")
+                        break;
                     }
-                    broadcastMessage(['output', [payload]], { type: 'success', msg: 'Message sent.'});
-                    // sendData(['output', [payload]], ws);
-                    // sendStatus({
-                    //     type: 'success',
-                    //     msg: 'Message sent.'
-                    // }, ws);
+                    if(user1>user2){//lexicographic order
+                        const temp = user2;
+                        user2 = user1;
+                        user1 = temp;
+                    }
+                    const existing = await ChatBox.findOne({users:[user1, user2]});
+                    if(!existing){
+                        await ChatBox.create({users:[user1, user2]});
+                    }
+                    sendData(["createSuccess", { type: 'success', msg: "ChatBox created."}], ws);
+                    console.log('chatbox created');
+                    initData(user1, user2, ws);
                     break;
                 }
-                case 'clear': {
-                    Message.deleteMany({}, () => {
-                        broadcastMessage(['cleared'], { type: 'info', msg: 'Message cache cleared.'});
-                        // sendData(['cleared'], ws);
-                        // sendStatus({ type: 'info', msg: 'Message cache cleared.'}, ws);
+
+                case 'input': {
+                    const { sender, receiver, body, timestamp} = payload;
+                    const message = new Message({ sender, receiver, body, timestamp });
+                    var [user1, user2] = [sender, receiver];
+                    if(user1>user2){//lexicographic order
+                        const temp = user2;
+                        user2 = user1;
+                        user1 = temp;
+                    }
+                    await ChatBox.updateOne({users:[user1, user2]}, { $push: { messages: message } });
+                    console.log(payload);
+                    //may have multiple tabs in browsers
+                    const senders = loginClients.filter(loginClient => loginClient.username === sender);
+                    senders.forEach(sender => {
+                        sendData(['sent', payload], sender.client)
+                        sendStatus({ type: 'success', msg: 'Message sent.'}, sender.client);
                     });
+
+                    const receivers = loginClients.filter(loginClient => loginClient.username === receiver && loginClient.username !== sender);//message to self
+                    receivers.forEach(receiver => {
+                        sendData(['received', payload], receiver.client)
+                        sendStatus({ type: 'success', msg: 'Message received.'}, receiver.client);
+                    });
+                    break;
+                }
+                case 'logOut': {
+                    const logOutClient = loginClients.filter(client => client.client === ws)[0];
+                    const logOutIndex = loginClients.indexOf(logOutClient);
+                    loginClients.splice(logOutIndex, 1);
+                    // console.log(loginClients);
                     break;
                 }
                 default:

@@ -8,7 +8,7 @@ const Title = styled.div`
     h1 {
         margin: 0;
         margin-right: 20px;
-        font-size: 3em;
+        font-size: 2.5em;
     }
     padding: 20px;
 `
