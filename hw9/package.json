@@ -5,6 +5,6 @@
   "license": "MIT",
   "scripts": {
     "start": "cd frontend && yarn start",
-    "server": "cd backend-gql && yarn server"
+    "server": "cd backend && yarn server"
   }
 }
