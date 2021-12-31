@@ -1,0 +1,62 @@
+type Query {
+  messages(chatBoxName: String): [Message!]
+}
+
+type Mutation {
+  login(username: String, password: String, secretKey: String): AuthPayload!
+  signUp(username: String, password: String): AuthPayload!
+  createChatBox(name1: String, name2: String):  CreateChatBoxPayload!
+  createMessage(from: String, to: String, message: String): CreateMessagePayload!
+}
+
+type Subscription {
+  message(chatBoxName: String): MessageSubscriptionPayload!
+}
+
+type AuthPayload {
+  status: AuthType!
+  message: String!
+}
+
+type CreateChatBoxPayload {
+  response: AuthPayload!
+  chatBox: ChatBox
+}
+
+type CreateMessagePayload {
+  response: AuthPayload!
+  message: Message!
+}
+
+enum AuthType {
+  Success
+  Failed
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  message: Message!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type ChatBox {
+  id: ID!
+  name: String!
+  messages: [Message!]
+}
+
+type Message {
+  id: ID!
+  sender: User!
+  body: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+}
