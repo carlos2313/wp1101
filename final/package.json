@@ -1,0 +1,12 @@
+{
+  "name": "wp1101-final-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/carlos2313/wp1101-final-project.git",
+  "author": "Carlos Chen <carlos.chen.yaya@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  }
+}
