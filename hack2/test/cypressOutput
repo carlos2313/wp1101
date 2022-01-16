@@ -1,0 +1,332 @@
+yarn run v1.22.17
+$ npx cypress run --spec cypress/integration/public.spec.js
+
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        9.1.1                                                                          │
+  │ Browser:        Electron 94 (headless)                                                         │
+  │ Node Version:   v14.18.1 (C:\Program Files\nodejs\node.exe)                                    │
+  │ Specs:          1 found (public.spec.js)                                                       │
+  │ Searched:       cypress\integration\public.spec.js                                             │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  public.spec.js                                                                  (1 of 1)
+
+
+  Hackathon 2 Public Test
+    √ 1 (20%) (172ms)
+    √ 2-(1) (10%) (88ms)
+    1) 2-(2) (10%)
+    √ 3-(1) (10%) (153ms)
+    2) 3-(2) (10%)
+    3) 4-(1) (10%)
+    4) 4-(2) (10%)
+    5) 5-(1) (10%)
+    6) 5-(2) (10%)
+
+
+  3 passing (50s)
+  6 failing
+
+  1) Hackathon 2 Public Test
+       2-(2) (10%):
+     CypressError: `cy.visit()` failed trying to load:
+
+http://localhost:3000/
+
+We attempted to make an http request to this URL but the request failed without a response.
+
+We received this error at the network level:
+
+  > Error: ESOCKETTIMEDOUT
+
+Common situations why this would fail:
+  - you don't have internet access
+  - you forgot to run / boot your web server
+  - your web server isn't accessible
+  - you have weird network configuration settings on your computer
+      at http://localhost:4000/__cypress/runner/cypress_runner.js:158141:82
+      at visitFailedByErr (http://localhost:4000/__cypress/runner/cypress_runner.js:157494:12)
+      at http://localhost:4000/__cypress/runner/cypress_runner.js:158140:11
+      at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13196:23)
+      at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:11131:31)
+      at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11188:18)
+      at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11233:10)
+      at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11309:18)
+      at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7903:12)
+      at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7896:9)
+      at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7912:5)
+      at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7782:14)
+  From Your Spec Code:
+      at Context.eval (http://localhost:4000/__cypress/tests?p=cypress\integration\public.spec.js:115:8)
+  
+  From Node.js Internals:
+    Error: ESOCKETTIMEDOUT
+        at ClientRequest.<anonymous> (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\@cypress\request\request.js:808:19)
+        at Object.onceWrapper (node:events:513:28)
+        at ClientRequest.emit (node:events:394:28)
+        at Socket.emitRequestTimeout (node:_http_client:761:9)
+        at Object.onceWrapper (node:events:513:28)
+        at Socket.emit (node:events:406:35)
+        at Socket._onTimeout (node:net:486:8)
+        at listOnTimeout (node:internal/timers:557:17)
+        at processTimers (node:internal/timers:500:7)
+    
+
+  2) Hackathon 2 Public Test
+       3-(2) (10%):
+     AssertionError: Timed out retrying after 4000ms: Expected to find element: `#pid-0-title`, but never found it.
+      at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\public.spec.js:138:8)
+
+  3) Hackathon 2 Public Test
+       4-(1) (10%):
+     CypressError: `cy.request()` failed trying to load:
+
+http://localhost:4000/api/newPost
+
+We attempted to make an http request to this URL but the request failed without a response.
+
+We received this error at the network level:
+
+  > Error: connect ECONNREFUSED 127.0.0.1:4000
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: POST
+URL: http://localhost:4000/api/newPost
+
+-----------------------------------------------------------
+
+Common situations why this would fail:
+  - you don't have internet access
+  - you forgot to run / boot your web server
+  - your web server isn't accessible
+  - you have weird network configuration settings on your computer
+
+https://on.cypress.io/request
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:159431:78
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:8335:37
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at Promise._settlePromiseFromHandler (http://localhost:3000/__cypress/runner/cypress_runner.js:11131:31)
+      at Promise._settlePromise (http://localhost:3000/__cypress/runner/cypress_runner.js:11188:18)
+      at Promise._settlePromise0 (http://localhost:3000/__cypress/runner/cypress_runner.js:11233:10)
+      at Promise._settlePromises (http://localhost:3000/__cypress/runner/cypress_runner.js:11309:18)
+      at _drainQueueStep (http://localhost:3000/__cypress/runner/cypress_runner.js:7903:12)
+      at _drainQueue (http://localhost:3000/__cypress/runner/cypress_runner.js:7896:9)
+      at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7912:5)
+      at Async.drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7782:14)
+  From Your Spec Code:
+      at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\public.spec.js:149:8)
+  
+  From Node.js Internals:
+    RequestError: Error: connect ECONNREFUSED 127.0.0.1:4000
+        at new RequestError (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\errors.js:14:15)
+        at Request.plumbing.callback (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\plumbing.js:87:29)
+        at Request.RP$callback [as _callback] (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\plumbing.js:46:31)
+        at self.callback (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\@cypress\request\request.js:183:22)
+        at Request.emit (node:events:394:28)
+        at Request.onRequestError (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\@cypress\request\request.js:869:8)
+        at ClientRequest.emit (node:events:406:35)
+        at Socket.socketErrorListener (node:_http_client:447:9)
+        at Socket.emit (node:events:394:28)
+        at emitErrorNT (node:internal/streams/destroy:157:8)
+        at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+        at processTicksAndRejections (node:internal/process/task_queues:83:21)
+    
+
+  4) Hackathon 2 Public Test
+       4-(2) (10%):
+     CypressError: `cy.visit()` failed trying to load:
+
+http://localhost:3000/
+
+We attempted to make an http request to this URL but the request failed without a response.
+
+We received this error at the network level:
+
+  > Error: connect ECONNREFUSED 127.0.0.1:3000
+
+Common situations why this would fail:
+  - you don't have internet access
+  - you forgot to run / boot your web server
+  - your web server isn't accessible
+  - you have weird network configuration settings on your computer
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:158141:82
+      at visitFailedByErr (http://localhost:3000/__cypress/runner/cypress_runner.js:157494:12)
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:158140:11
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at Promise._settlePromiseFromHandler (http://localhost:3000/__cypress/runner/cypress_runner.js:11131:31)
+      at Promise._settlePromise (http://localhost:3000/__cypress/runner/cypress_runner.js:11188:18)
+      at Promise._settlePromise0 (http://localhost:3000/__cypress/runner/cypress_runner.js:11233:10)
+      at Promise._settlePromises (http://localhost:3000/__cypress/runner/cypress_runner.js:11309:18)
+      at _drainQueueStep (http://localhost:3000/__cypress/runner/cypress_runner.js:7903:12)
+      at _drainQueue (http://localhost:3000/__cypress/runner/cypress_runner.js:7896:9)
+      at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7912:5)
+      at Async.drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7782:14)
+  From Your Spec Code:
+      at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\public.spec.js:171:8)
+  
+  From Node.js Internals:
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1142:16)
+    
+
+  5) Hackathon 2 Public Test
+       5-(1) (10%):
+     CypressError: `cy.request()` failed trying to load:
+
+http://localhost:4000/api/post?pid=228d96c4-fc74-4a7a-86ea-aeeb7f574d69
+
+We attempted to make an http request to this URL but the request failed without a response.
+
+We received this error at the network level:
+
+  > Error: connect ECONNREFUSED 127.0.0.1:4000
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: DELETE
+URL: http://localhost:4000/api/post?pid=228d96c4-fc74-4a7a-86ea-aeeb7f574d69
+
+-----------------------------------------------------------
+
+Common situations why this would fail:
+  - you don't have internet access
+  - you forgot to run / boot your web server
+  - your web server isn't accessible
+  - you have weird network configuration settings on your computer
+
+https://on.cypress.io/request
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:159431:78
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:8335:37
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at Promise._settlePromiseFromHandler (http://localhost:3000/__cypress/runner/cypress_runner.js:11131:31)
+      at Promise._settlePromise (http://localhost:3000/__cypress/runner/cypress_runner.js:11188:18)
+      at Promise._settlePromise0 (http://localhost:3000/__cypress/runner/cypress_runner.js:11233:10)
+      at Promise._settlePromises (http://localhost:3000/__cypress/runner/cypress_runner.js:11309:18)
+      at _drainQueueStep (http://localhost:3000/__cypress/runner/cypress_runner.js:7903:12)
+      at _drainQueue (http://localhost:3000/__cypress/runner/cypress_runner.js:7896:9)
+      at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7912:5)
+      at Async.drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7782:14)
+  From Your Spec Code:
+      at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\public.spec.js:182:8)
+  
+  From Node.js Internals:
+    RequestError: Error: connect ECONNREFUSED 127.0.0.1:4000
+        at new RequestError (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\errors.js:14:15)
+        at Request.plumbing.callback (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\plumbing.js:87:29)
+        at Request.RP$callback [as _callback] (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\request-promise-core\lib\plumbing.js:46:31)
+        at self.callback (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\@cypress\request\request.js:183:22)
+        at Request.emit (node:events:394:28)
+        at Request.onRequestError (C:\Users\88697\AppData\Local\Cypress\Cache\9.1.1\Cypress\resources\app\node_modules\@cypress\request\request.js:869:8)
+        at ClientRequest.emit (node:events:406:35)
+        at Socket.socketErrorListener (node:_http_client:447:9)
+        at Socket.emit (node:events:394:28)
+        at emitErrorNT (node:internal/streams/destroy:157:8)
+        at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+        at processTicksAndRejections (node:internal/process/task_queues:83:21)
+    
+
+  6) Hackathon 2 Public Test
+       5-(2) (10%):
+     CypressError: `cy.visit()` failed trying to load:
+
+http://localhost:3000/
+
+We attempted to make an http request to this URL but the request failed without a response.
+
+We received this error at the network level:
+
+  > Error: connect ECONNREFUSED 127.0.0.1:3000
+
+Common situations why this would fail:
+  - you don't have internet access
+  - you forgot to run / boot your web server
+  - your web server isn't accessible
+  - you have weird network configuration settings on your computer
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:158141:82
+      at visitFailedByErr (http://localhost:3000/__cypress/runner/cypress_runner.js:157494:12)
+      at http://localhost:3000/__cypress/runner/cypress_runner.js:158140:11
+      at tryCatcher (http://localhost:3000/__cypress/runner/cypress_runner.js:13196:23)
+      at Promise._settlePromiseFromHandler (http://localhost:3000/__cypress/runner/cypress_runner.js:11131:31)
+      at Promise._settlePromise (http://localhost:3000/__cypress/runner/cypress_runner.js:11188:18)
+      at Promise._settlePromise0 (http://localhost:3000/__cypress/runner/cypress_runner.js:11233:10)
+      at Promise._settlePromises (http://localhost:3000/__cypress/runner/cypress_runner.js:11309:18)
+      at _drainQueueStep (http://localhost:3000/__cypress/runner/cypress_runner.js:7903:12)
+      at _drainQueue (http://localhost:3000/__cypress/runner/cypress_runner.js:7896:9)
+      at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7912:5)
+      at Async.drainQueues (http://localhost:3000/__cypress/runner/cypress_runner.js:7782:14)
+  From Your Spec Code:
+      at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\public.spec.js:198:8)
+  
+  From Node.js Internals:
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1142:16)
+    
+
+
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        9                                                                                │
+  │ Passing:      3                                                                                │
+  │ Failing:      6                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  6                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     49 seconds                                                                       │
+  │ Spec Ran:     public.spec.js                                                                   │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 2-(2) (10%) (failed).png                                                             
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 3-(2) (10%) (failed).png                                                             
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 4-(1) (10%) (failed).png                                                             
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 4-(2) (10%) (failed).png                                                             
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 5-(1) (10%) (failed).png                                                             
+  -  D:\WebProgramming\hws\hack2\cypress\screenshots\public.spec.js\Hackathon 2 Publi     (1280x720)
+     c Test -- 5-(2) (10%) (failed).png                                                             
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: D:\WebProgramming\hws\hack2\cypress\videos\public.spec.js.m    (5 seconds)
+                          p4                                                                        
+
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ×  public.spec.js                           00:49        9        3        6        -        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ×  1 of 1 failed (100%)                     00:49        9        3        6        -        -  
+
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
